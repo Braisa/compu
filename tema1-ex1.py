@@ -20,6 +20,8 @@ roots = np.reshape(roots, (int(np.size(roots)/2), 2))
 for r, root in enumerate(roots):
     print(f"A raíz {r+1} atópase no subintervalo ({root[0]:.1f},{root[1]:.1f}).")
 
+# Exercicio 2
+
 fig, ax = plt.subplots()
 
 x_lin = np.linspace(-2, 4, 1000)
