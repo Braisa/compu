@@ -6,7 +6,7 @@ plt.ion()
 func = lambda x : np.exp(x)*np.sin(x)
 derfw = lambda c, h : (func(c+h) - func(c))/h
 derexact = lambda x : np.exp(x) * (np.sin(x) + np.cos(x))
-err = lambda c, h : np.abs(1 - derfw(c, h)/derexact(c))
+err = lambda c, h : np.abs(derexact(c) - derfw(c, h))
 
 x_0 = 1.
 hs = (1e-1, 1e-2, 1e-3, 1e-4, 1e-5)
