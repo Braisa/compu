@@ -12,7 +12,9 @@ print(AB)
 
 AB_tri = AB
 
-for i in range(np.size(B)):
+verbose = True
+
+for i in range(-1+np.size(B)):
     
     columna = AB_tri.T[i]
 
@@ -24,6 +26,11 @@ for i in range(np.size(B)):
     substract = np.tensordot(mults, AB_tri[i], axes = 0)
 
     AB_tri = AB_tri - substract
+    
+    if verbose:
+        print(f"Paso {i+1}")
+        print(AB_tri)
+
 
 print("Matriz triangular resultante")
 print(AB_tri)
