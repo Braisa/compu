@@ -1,11 +1,13 @@
 import numpy as np
 
-A = np.array(((2,-1,1),
-              (-1,1,2),
-              (1,2,-1)))
+A = np.array(((9,-4,0,0),
+              (-4,6,0,0),
+              (0,0,8,-3),
+              (0,0,-3,7)))
 
-B = np.array((3,7,2)).reshape((3,1))
+B = np.array((20,-10,-20,10)).reshape((4,1))
 
+# Copiado do ex3
 AB = np.hstack((A,B))
 print(f"Matriz ampliada inicial\n{AB}")
 
@@ -28,4 +30,4 @@ for i in range(np.size(B)-1, -1, -1):
 
 print("Solución por substitución regresiva")
 for s, sol in enumerate(sols):
-    print(f"x_{s+1} = {sol[0]:.2f}")
+    print(f"I_{s+1} = {sol[0]:.2f} A")
