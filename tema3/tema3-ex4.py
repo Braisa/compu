@@ -7,9 +7,12 @@ A = np.array(((9,-4,0,0),
 
 B = np.array((20,-10,-20,10)).reshape((4,1))
 
-# Copiado do ex3
-AB = np.hstack((A,B))
+AB = np.hstack((A,B))#[::-1]
 print(f"Matriz ampliada inicial\n{AB}")
+
+# Reordenación das filas para evitar un cero no primeiro pivote
+first_nonzero_piv = np.where(AB[:,0] != 0)[0][0]
+AB = np.vstack((AB,AB))[first_nonzero_piv:first_nonzero_piv+np.size(B)]
 
 AB_tri = AB
 
