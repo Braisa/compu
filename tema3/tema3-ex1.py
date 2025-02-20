@@ -4,7 +4,7 @@ A = np.array(((1,1,-2),
               (0,-3,8),
               (0,0,-10)))
 
-B = np.atleast_2d(np.array((9,-14,-5))).T
+B = np.reshape(np.array((9,-14,-5)), (3,1))
 
 AB = np.hstack((A, B))
 
