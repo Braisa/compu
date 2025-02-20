@@ -10,7 +10,7 @@ B = np.array((20,-10,-20,10)).reshape((4,1))
 AB = np.hstack((A,B))#[::-1]
 print(f"Matriz ampliada inicial\n{AB}")
 
-# Reordenación das filas para evitar un cero no primeiro pivote
+# Reordenación das filas para evitar un cero no primeiro pivote; isto inclúe ó exercicio 6
 first_nonzero_piv = np.where(AB[:,0] != 0)[0][0]
 AB = np.vstack((AB,AB))[first_nonzero_piv:first_nonzero_piv+np.size(B)]
 
