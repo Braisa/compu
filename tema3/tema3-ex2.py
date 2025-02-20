@@ -10,18 +10,20 @@ AB = np.hstack((A,B))
 print("Matriz ampliada inicial")
 print(AB)
 
+AB_tri = AB
+
 for i in range(np.size(B)):
     
-    columna = AB.T[i]
+    columna = AB_tri.T[i]
 
     mults_zeroes = np.zeros(i+1)
     mults_rest = np.ones(np.size(columna)-i-1)
     mults = np.hstack((mults_zeroes, mults_rest))
     
     mults *= columna/columna[i]
-    substract = np.tensordot(mults, AB[i], axes = 0)
+    substract = np.tensordot(mults, AB_tri[i], axes = 0)
 
-    AB = AB - substract
+    AB_tri = AB_tri - substract
 
 print("Matriz triangular resultante")
-print(AB)
+print(AB_tri)
