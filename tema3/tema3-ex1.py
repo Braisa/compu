@@ -10,7 +10,7 @@ AB = np.hstack((A, B))
 
 print(f"Matriz ampliada:\n{AB}")
 
-sols = np.zeros(3)
+sols = np.zeros((3,1))
 
 # Triangular superior, co cal percorremos en sentido inverso
 for i, fila in enumerate(AB[::-1]):
@@ -19,4 +19,4 @@ for i, fila in enumerate(AB[::-1]):
 
 print("Solución por substitución regresiva.")
 for i, sol in enumerate(sols):
-    print(f"x_{i+1} = {sol:.2f}")
+    print(f"x_{i+1} = {sol[0]:.2f}")
