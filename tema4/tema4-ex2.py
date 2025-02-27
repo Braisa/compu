@@ -17,7 +17,7 @@ for i, f in enumerate((f1,f2)):
 
 # Alternativamente
 
-def trapecio_compuesto(f, a, b, n):
+def trapecio_composta(f, a, b, n):
 
     """
     f : función a integrar
@@ -32,5 +32,5 @@ def trapecio_compuesto(f, a, b, n):
     return aprox
 
 print(f"Alternativamente, chamando a unha función que contén o cálculo.")
-print(f"A integral I_1 resulta {trapecio_compuesto(f1,a,b,n):.7f}")
-print(f"A integral I_2 resulta {trapecio_compuesto(f2,a,b,n):.7f}")
+print(f"A integral I_1 resulta {trapecio_composta(f1,a,b,n):.7f}")
+print(f"A integral I_2 resulta {trapecio_composta(f2,a,b,n):.7f}")
