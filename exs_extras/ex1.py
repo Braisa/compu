@@ -9,7 +9,10 @@ plt.ion()
 tau = 1
 rayleigh = lambda d, D : d/(2*D*tau) * np.exp(-d**2/(4*D*tau))
 
-data = pd.read_csv("exs_extras/position.csv", index_col = 0)
+# Modificado para que funcione en calquera dispositivo, en principio
+#data = pd.read_csv("exs_extras/position.csv", index_col = 0)
+from os.path import dirname
+data = pd.read_csv(dirname(__file__) + "/position.csv", index_col = 0)
 
 time_tau_index = data["Time (ns)"] >= 4000 + tau
 time_index = data["Time (ns)"] < 5000 - tau
