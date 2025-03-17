@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from scipy.optimize import curve_fit
+import tabulate as tab
 import uncertainties as unc
 
 plt.ion()
@@ -47,5 +48,15 @@ ax.legend(loc = "best")
 #fig.savefig("exs_extras/ex1.pdf", dpi = 300, bbox_inches = "tight")
 plt.show()
 
-print(r"$D$ (Å$^2$ ns$^{-1}$)")
-print(f"{results:.2uL}")
+#print(r"$D$ (Å$^2$ ns$^{-1}$)")
+#print(f"{results:.2uL}")
+
+# Imprimir os resultados nunha táboa
+results_df = pd.DataFrame(index = [0])
+results_df["D"] = results.n
+results_df["sD"] = results.s
+
+print(tab.tabulate(results_df,
+                   headers = (r"$D$ (Å$^2$ ns$^{-1}$)", r"$s(D)$ (Å$^2$ ns$^{-1}$)"),
+                   floatfmt = ".5f")
+)
