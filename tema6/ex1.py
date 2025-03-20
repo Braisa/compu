@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Brais Otero Lema
+
 r, k = 1, 1
 deriv = lambda p : r*p*(1-p/k)
 
