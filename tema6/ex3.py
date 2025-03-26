@@ -4,7 +4,9 @@ import matplotlib.pyplot as plt
 # Brais Otero Lema
 
 w_0 = 10
-derivs = lambda t, x, y : np.array((y, -w_0**2 * x))
+w = 15
+b, F = 1, 1
+derivs = lambda t, x, y : np.array((y, -b*y -w_0**2 * x + F*np.cos(w*t)))
 
 t0, x0, y0 = 0, 0, 1
 deltas = (1e-2, 1e-3)
@@ -56,4 +58,4 @@ ax.set_ylabel("y")
 
 ax.legend(loc = "best", fontsize = "small")
 
-fig.savefig("tema6/ex2.pdf", dpi = 300, bbox_inches = "tight")
+fig.savefig("tema6/ex3.pdf", dpi = 300, bbox_inches = "tight")
