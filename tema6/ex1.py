@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 r, k = 1, 1
 deriv = lambda p : r*p*(1-p/k)
 
+T = 3
+
 t0, p0 = 0, 10
 delta = 1e-2
 
@@ -33,7 +35,7 @@ for _j, (method, c, l) in enumerate(zip(methods, colors, labels)):
     t, p = t0, p0
     ax.plot(t, p, ".", color = c, label = l)
     
-    for _i in range(int(1/delta)):
+    for _i in range(T*int(1/delta)):
 
         t += delta
         p = method(p)
@@ -43,7 +45,7 @@ for _j, (method, c, l) in enumerate(zip(methods, colors, labels)):
 ax.set_xlabel("t")
 ax.set_ylabel("p")
 
-ax.set_xlim(left = t0)
+ax.set_xlim(left = t0, right = t0 + T)
 
 ax.legend(loc = "best")
 
