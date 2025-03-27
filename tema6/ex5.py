@@ -11,7 +11,8 @@ T_max = 10
 t0, p0 = 0, .01
 delta0 = 1e-3
 
-crit_min, crit_max = 1e-5, 1e-4
+#crit_min, crit_max = .005, .01
+crit_min, crit_max = .01, .05
 delta_min, delta_max = 1e-4, 1e-2
 
 fig, ax = plt.subplots()
@@ -32,9 +33,9 @@ while t < T_max:
     
     while delta == np.clip(delta, delta_min, delta_max):
 
-        if np.abs(dp) < crit_min:
+        if np.abs(dp/p0) < crit_min:
             delta *= 2
-        elif np.abs(dp) > crit_max:
+        elif np.abs(dp/p0) > crit_max:
             delta /= 2
         else:
             break
@@ -47,7 +48,7 @@ while t < T_max:
     p += euler_step(p, delta)
 
     ax.plot(t, p, ".", color = c)
-    ax_delta.semilogy(t, delta, "o", color = c_delta, alpha = .5)
+    ax_delta.semilogy(t, delta, ".", color = c_delta, alpha = .5)
 
 ax.set_xlabel("t")
 
