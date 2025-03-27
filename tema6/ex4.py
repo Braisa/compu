@@ -8,14 +8,17 @@ derivs = lambda t, x, y, z : np.array((s*(y - x),
                                        r*x - y - x*z,
                                        x*y - b*z))
 
-T = 10
-t0, x0, y0, z0 = 0, 0, 1, 0
+T = 5
+t0, coords0 = 0, (0,1,0)
 deltas = (1e-2, 1e-3)
 markers = (".", ",")
 
 fig_x, ax_x = plt.subplots()
 fig_y, ax_y = plt.subplots()
 fig_z, ax_z = plt.subplots()
+figs, axs = (fig_x,fig_y,fig_z), (ax_x,ax_y,ax_z)
+names = ("x","y","z")
+
 colors = ((1,.5,0,1), (.5,0,.5,.8), (0,0,1,.6))
 labels = ("Euler", "R-K 2", "R-K 4")
 
@@ -40,41 +43,28 @@ for _z, (delta, m) in enumerate(zip(deltas, markers)):
 
     for _j, (method, c, l) in enumerate(zip(methods, colors, labels)):
 
-        t, x, y, z = t0, x0, y0, z0
+        t, coords = t0, coords0
         #ax.plot(t, x, m, color = c, label = f"{l}, delta = {delta:.0e}")
-        ax_x.plot(t, x, m, color = c, label = f"{l}, delta = {delta:.0e}")
-        ax_y.plot(t, y, m, color = c, label = f"{l}, delta = {delta:.0e}")
-        ax_z.plot(t, z, m, color = c, label = f"{l}, delta = {delta:.0e}")
+
+        for _i, (ax, coord) in enumerate(zip(axs, coords)):
+            ax.plot(t, coord, m, color = c, label = f"{l}, delta = {delta:.0e}")
         
         for _i in range(T*int(1/delta)):
 
             t += delta
-            dx, dy, dz = method(delta, derivs, t, pars = (x, y, z))
-            x += dx
-            y += dy
-            z += dz
+            dcoords = method(delta, derivs, t, pars = coords)
+            coords += dcoords
 
-            #ax.plot(t, x, m, color = c)
-            ax_x.plot(t, x, m, color = c)
-            ax_y.plot(t, y, m, color = c)
-            ax_z.plot(t, z, m, color = c)
+            for _k, (ax, coord) in enumerate(zip(axs, coords)):
+                ax.plot(t, coord, m, color = c)
 
-ax_x.set_xlabel("t")
-ax_y.set_xlabel("t")
-ax_z.set_xlabel("t")
+for _i, (fig, ax, name) in enumerate(zip(figs, axs, names)):
 
-ax_x.set_ylabel("x")
-ax_y.set_ylabel("y")
-ax_z.set_ylabel("z")
+    ax.set_xlabel("t")
+    ax.set_ylabel(name)
 
-ax_x.set_xlim(left = t0, right = t0 + T)
-ax_y.set_xlim(left = t0, right = t0 + T)
-ax_z.set_xlim(left = t0, right = t0 + T)
+    ax.set_xlim(left = t0, right = t0 + T)
 
-ax_x.legend(loc = "best", fontsize = "small")
-ax_y.legend(loc = "best", fontsize = "small")
-ax_z.legend(loc = "best", fontsize = "small")
+    ax.legend(loc = "best", fontsize = "small")
 
-fig_x.savefig("tema6/ex4_x.pdf", dpi = 300, bbox_inches = "tight")
-fig_y.savefig("tema6/ex4_y.pdf", dpi = 300, bbox_inches = "tight")
-fig_z.savefig("tema6/ex4_z.pdf", dpi = 300, bbox_inches = "tight")
+    fig.savefig(f"tema6/ex4_{name}.pdf", dpi = 300, bbox_inches = "tight")
