@@ -49,4 +49,5 @@ ax.set_xlim(left = t0, right = t0 + T)
 
 ax.legend(loc = "best")
 
-fig.savefig("tema6/ex1.pdf", dpi = 300, bbox_inches = "tight")
+#fig.savefig("tema6/ex1.pdf", dpi = 300, bbox_inches = "tight")
+plt.show()

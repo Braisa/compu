@@ -48,14 +48,12 @@ for _z, (delta, m) in enumerate(zip(deltas, markers)):
             x += dx
             y += dy
 
-            #ax.plot(t, x, m, color = c)
             ax.plot(x, y, m, color = c)
 
 ax.set_xlabel("x")
 ax.set_ylabel("y")
 
-#ax.set_xlim(left = t0, right = t0 + 1)
-
 ax.legend(loc = "best", fontsize = "small")
 
-fig.savefig("tema6/ex3.pdf", dpi = 300, bbox_inches = "tight")
+#fig.savefig("tema6/ex3.pdf", dpi = 300, bbox_inches = "tight")
+plt.show()

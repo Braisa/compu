@@ -66,4 +66,5 @@ ax_delta.yaxis.set_major_locator(plt.FixedLocator((delta_min, delta0, delta_max)
 ax_delta.yaxis.set_minor_locator(plt.AutoLocator())
 
 fig.tight_layout()
-fig.savefig("tema6/ex5.pdf", dpi = 300, bbox_inches = "tight")
+#fig.savefig("tema6/ex5.pdf", dpi = 300, bbox_inches = "tight")
+plt.show()

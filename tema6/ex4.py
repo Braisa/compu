@@ -57,4 +57,5 @@ ax.set_zlabel("z")
 
 ax.legend(loc = "best", fontsize = "small")
 
-fig.savefig(f"tema6/ex4_3d.pdf", dpi = 300, bbox_inches = "tight")
+#fig.savefig(f"tema6/ex4_3d.pdf", dpi = 300, bbox_inches = "tight")
+plt.show()
