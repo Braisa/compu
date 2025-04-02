@@ -44,8 +44,8 @@ while t < T_max:
     
     delta = np.clip(delta, delta_min, delta_max)
 
-    t += delta
     p += euler_step(p, delta)
+    t += delta
 
     ax.plot(t, p, ".", color = c)
     ax_delta.semilogy(t, delta, ".", color = c_delta, alpha = .5)

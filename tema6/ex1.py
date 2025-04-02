@@ -37,8 +37,8 @@ for _j, (method, c, l) in enumerate(zip(methods, colors, labels)):
     
     for _i in range(T*int(1/delta)):
 
-        t += delta
         p = method(p)
+        t += delta
 
         ax.plot(t, p, ".", color = c)
 

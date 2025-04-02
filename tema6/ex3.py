@@ -43,8 +43,8 @@ for _z, (delta, m) in enumerate(zip(deltas, markers)):
         
         for _i in range(int(1/delta)):
 
-            t += delta
             dx, dy = method(delta, derivs, t, pars = (x, y))
+            t += delta
             x += dx
             y += dy
 

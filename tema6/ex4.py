@@ -11,13 +11,15 @@ derivs = lambda t, x, y, z : np.array((s*(y - x),
 T = 5
 t0, coords0 = 0, (0,1,0)
 deltas = (1e-2, 1e-3)
-markers = (".", ",")
 
 fig = plt.figure()
-ax = fig.add_subplot(projection = "3d")
+ax_euler = fig.add_subplot(1, 3, 1, projection = "3d")
+ax_rk2 = fig.add_subplot(1, 3, 2, projection = "3d")
+ax_rk4 = fig.add_subplot(1, 3, 3, projection = "3d")
+axs = (ax_euler, ax_rk2, ax_rk4)
 
 colors = ((1,.5,0,1), (.5,0,.5,.8), (0,0,1,.6))
-labels = ("Euler", "R-K 2", "R-K 4")
+titles = ("Euler", "R-K 2", "R-K 4")
 
 def euler_step(delta, funcs, t, pars):
     return delta*funcs(t, *pars)
@@ -36,26 +38,34 @@ def rk4_step(delta, funcs, t, pars):
 
 methods = (euler_step, rk2_step, rk4_step)
 
-for _z, (delta, m) in enumerate(zip(deltas, markers)):
+for _k, (ax, title, method) in enumerate(zip(axs, titles, methods)):
 
-    for _j, (method, c, l) in enumerate(zip(methods, colors, labels)):
+    for _j, (delta, c) in enumerate(zip(deltas, colors)):
+
+        store_x, store_y, store_z = np.array((coords0[0])), np.array((coords0[1])), np.array((coords0[2]))
 
         t, coords = t0, coords0
-        ax.scatter(coords[0], coords[1], coords[2], m, color = c, label = f"{l}, delta = {delta:.0e}")
+        ax.scatter(coords[0], coords[1], coords[2], ",", color = c, label = f"delta = {delta:.0e}")
         
         for _i in range(T*int(1/delta)):
 
-            t += delta
             dcoords = method(delta, derivs, t, pars = coords)
+            t += delta
             coords += dcoords
-        
-            ax.scatter(coords[0], coords[1], coords[2], m, color = c)
 
-ax.set_xlabel("x")
-ax.set_ylabel("y")
-ax.set_zlabel("z")
+            store_x = np.append(store_x, coords[0])
+            store_y = np.append(store_y, coords[1])
+            store_z = np.append(store_z, coords[2])
 
-ax.legend(loc = "best", fontsize = "small")
+        ax.scatter(store_x, store_y, store_z, ",", color = c)
+
+    ax.set_xlabel("x")
+    ax.set_ylabel("y")
+    ax.set_zlabel("z")
+
+    ax.legend(loc = "best", fontsize = "small")
+
+    ax.set_title(title)
 
 #fig.savefig(f"tema6/ex4_3d.pdf", dpi = 300, bbox_inches = "tight")
 plt.show()
