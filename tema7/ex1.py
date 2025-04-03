@@ -1,6 +1,8 @@
 import numpy as np 
 import matplotlib.pyplot as plt
 
+# Brais Otero Lema
+
 N = 20
 t_steps = 1000
 delta_t, delta_x = .1, .5
@@ -23,13 +25,14 @@ titles = ("(a)", "(b)", "(c)", "(d)")
 
 def diffusion_step(t, T, boundary):
     T_new = np.zeros_like(T)
-
-    if boundary == "neu":
-        T_new[0], T_new[-1] = T[1], T[-2]
-    else:
-        T_new[0], T_new[-1] = boundary[0](t), boundary[-1](t)
     
     T_new[1:-1] = T[1:-1] + alpha * delta_t / delta_x**2 * (T[:-2] - 2*T[1:-1] + T[2:])
+    
+    if boundary == "neu":
+        T_new[0], T_new[-1] = T_new[1], T_new[-2]
+    else:
+        T_new[0], T_new[-1] = boundary[0](t), boundary[-1](t)
+
     return T_new
 
 for _j, (ax, title, initial, boundary) in enumerate(zip(np.ravel(axs), titles, initial_conds, boundaries)):
@@ -44,7 +47,6 @@ for _j, (ax, title, initial, boundary) in enumerate(zip(np.ravel(axs), titles, i
         if t % 10 == 0:
             ax.plot(T, ls = "solid")
 
-
     ax.set_xlim(left = 0, right = N)
 
     ax.set_xlabel("index")
@@ -52,4 +54,5 @@ for _j, (ax, title, initial, boundary) in enumerate(zip(np.ravel(axs), titles, i
 
     ax.set_title(title)
 
+fig.tight_layout()
 fig.savefig("tema7/ex1.pdf", dpi = 300, bbox_inches = "tight")
