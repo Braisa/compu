@@ -17,32 +17,34 @@ initial_conds = (T0, T1, T0, T0)
 
 b1 = (lambda t : 5, lambda t : 3)
 b2 = (lambda t : 5, lambda t : np.sin(t/2))
+neu = (lambda t : 0, lambda t : 0)
 
-boundaries = (b1, b1, b2, "neu")
+boundaries = (b1, b1, b2, neu)
+boundary_types = ("dirichlet", "dirichlet", "dirichlet", "neumann")
 
 fig, axs = plt.subplots(2, 2)
 titles = ("(a)", "(b)", "(c)", "(d)")
 
-def diffusion_step(t, T, boundary):
+def diffusion_step(t, T, boundary, boundary_type):
     T_new = np.zeros_like(T)
     
     T_new[1:-1] = T[1:-1] + alpha * delta_t / delta_x**2 * (T[:-2] - 2*T[1:-1] + T[2:])
     
-    if boundary == "neu":
-        T_new[0], T_new[-1] = T_new[1], T_new[-2]
-    else:
+    if boundary_type == "dirichlet":
         T_new[0], T_new[-1] = boundary[0](t), boundary[-1](t)
-
+    elif boundary_type == "neumann":
+        T_new[0], T_new[-1] = T_new[1] - delta_x * boundary[0](t), T_new[-2] - delta_x * boundary[1](t)
+    
     return T_new
 
-for _j, (ax, title, initial, boundary) in enumerate(zip(np.ravel(axs), titles, initial_conds, boundaries)):
+for _j, (ax, title, initial, boundary, boundary_type) in enumerate(zip(np.ravel(axs), titles, initial_conds, boundaries, boundary_types)):
 
     T = initial
     ax.plot(T, ls = "solid")
 
     for t in range(t_steps):
 
-        T = diffusion_step(t, T, boundary)
+        T = diffusion_step(t, T, boundary, boundary_type)
 
         if t % 10 == 0:
             ax.plot(T, ls = "solid")
