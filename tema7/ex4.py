@@ -28,6 +28,9 @@ def diffusion_step(t, T_curr, T_old, boundary, boundary_type):
     elif boundary_type == "neumann":
         T_new[0], T_new[-1] = T_new[1] - delta_x * boundary[0](t), T_new[-2] - delta_x * boundary[1](t)
 
+    # Promedio para mesturar información
+    T_new[1:-1] = .5 * (T_new[1:-1] + T[1:-1]).copy()
+
     return T_new
 
 fig, axs = plt.subplots(1, 2)
