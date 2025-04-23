@@ -2,6 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
+# Brais Otero Lema
+
 # Lectura do arquivo
 data = pd.read_csv("fichero4.csv", sep = ";")
 
