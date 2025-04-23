@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # Lectura do arquivo
-data = pd.read_csv("minimos_cadrados/fichero4.csv", sep = ";")
+data = pd.read_csv("fichero4.csv", sep = ";")
 
 # Definicións por comodidade
 data["sig"] = data["sigma_y"]**-2
@@ -64,4 +64,5 @@ ax.yaxis.set_major_locator(plt.MultipleLocator(.5))
 ax.yaxis.set_minor_locator(plt.MultipleLocator(.1))
 
 fig.tight_layout()
-fig.savefig("minimos_cadrados/ex4.pdf", dpi = 300, bbox_inches = "tight")
+#fig.savefig("minimos_cadrados/ex4.pdf", dpi = 300, bbox_inches = "tight")
+plt.show()
