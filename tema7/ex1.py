@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Brais Otero Lema
+# Exercicio 1
 
 N = 20
 t_steps = 1000
@@ -42,13 +43,6 @@ for _j, (ax, title, initial, boundary, boundary_type) in enumerate(zip(np.ravel(
     T = initial
     ax.plot(T, ls = "solid")
 
-    for t in range(t_steps):
-
-        T = diffusion_step(t, T, boundary, boundary_type)
-
-        if t % 10 == 0:
-            ax.plot(T, ls = "solid")
-
     ax.set_xlim(left = 0, right = N)
 
     ax.set_xlabel("index")
@@ -56,5 +50,13 @@ for _j, (ax, title, initial, boundary, boundary_type) in enumerate(zip(np.ravel(
 
     ax.set_title(title)
 
+    for t in range(t_steps):
+
+        T = diffusion_step(t, T, boundary, boundary_type)
+
+        if t % 10 == 0:
+            ax.plot(T, ls = "solid")
+            plt.pause(1/(1+t))
+
 fig.tight_layout()
-fig.savefig("tema7/ex1.pdf", dpi = 300, bbox_inches = "tight")
+#fig.savefig("tema7/ex1.pdf", dpi = 300, bbox_inches = "tight")

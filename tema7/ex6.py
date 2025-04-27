@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Brais Otero Lema
+# Exercicio 6
 
 N = 20
 t_steps = 1000
@@ -43,6 +44,13 @@ for _j, (boundary, boundary_type, ax, title) in enumerate(zip(boundaries, bounda
 
     T, T_old = initial, initial
     ax.plot(T, ls = "solid")
+    
+    ax.set_xlim(left = 0, right = N)
+
+    ax.set_xlabel("index")
+    ax.set_ylabel(r"$T$")
+
+    ax.set_title(title)
 
     for t in range(t_steps):
 
@@ -51,12 +59,6 @@ for _j, (boundary, boundary_type, ax, title) in enumerate(zip(boundaries, bounda
 
         if t % 10 == 0:
             ax.plot(T, ls = "solid")
+            plt.pause(1/(1+t))
 
-    ax.set_xlim(left = 0, right = N)
-
-    ax.set_xlabel("index")
-    ax.set_ylabel(r"$T$")
-
-    ax.set_title(title)
-
-fig.savefig("tema7/ex6.pdf", dpi = 300, bbox_inches = "tight")
+#fig.savefig("tema7/ex6.pdf", dpi = 300, bbox_inches = "tight")
