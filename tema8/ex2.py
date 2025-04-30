@@ -1,7 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.cm import plasma
-import cmasher as cmr
 
 # Brais Otero Lema
 
@@ -35,20 +33,18 @@ def diffusion_step(t, T_curr, boundary, boundary_type):
 
 fig, axs = plt.subplots(1, 2)
 titles = ("Dirichlet", "Fluxo nulo")
-sub_plasma = cmr.get_sub_cmap(plasma, .2, .9)
-colors = sub_plasma(np.linspace(0, 1, int(t_steps/paint_step)))
 
 for _j, (boundary, boundary_type, ax, title) in enumerate(zip(boundaries, boundary_types, np.ravel(axs), titles)):
 
     T = initial
-    ax.plot(T, ls = "solid", color = colors[0])
+    ax.plot(T, ls = "solid")
 
     for t in range(t_steps):
 
         T = diffusion_step(t, T, boundary, boundary_type)
 
         if t % paint_step == 0:
-            ax.plot(T, ls = "solid", color = colors[int(t/paint_step)])
+            ax.plot(T, ls = "solid")
 
     ax.set_xlim(left = 0, right = N)
 
