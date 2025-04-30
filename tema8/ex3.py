@@ -2,17 +2,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Brais Otero Lema
+# Exercicio 3
 
 N = 20
-t_steps = 100
+t_steps = 200
 paint_step = 10
-delta_t, delta_x = .1, .5
+delta_t, delta_x = .05, .5
 u = 1
 
 C = u * delta_t / delta_x
 
 initial = np.zeros(N+1)
-initial[9:11] = 20
+initial[1:3] = 20
 
 boundary_dirichlet = (lambda t : 0, lambda t : 0)
 boundary_neumann = (lambda t : 0, lambda t : 0)
@@ -42,6 +43,13 @@ for _j, (boundary, boundary_type, ax, title) in enumerate(zip(boundaries, bounda
     T, T_old = initial, initial
     ax.plot(T, ls = "solid")
 
+    ax.set_xlim(left = 0, right = N)
+
+    ax.set_xlabel("index")
+    ax.set_ylabel(r"$T$")
+
+    ax.set_title(title)
+
     for t in range(t_steps):
         
         T_old = T
@@ -49,12 +57,5 @@ for _j, (boundary, boundary_type, ax, title) in enumerate(zip(boundaries, bounda
 
         if t % paint_step == 0:
             ax.plot(T, ls = "solid")
-
-    ax.set_xlim(left = 0, right = N)
-
-    ax.set_xlabel("index")
-    ax.set_ylabel(r"$T$")
-
-    ax.set_title(title)
 
 fig.savefig("tema8/ex3.pdf", dpi = 300, bbox_inches = "tight")

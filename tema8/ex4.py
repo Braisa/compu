@@ -2,12 +2,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Brais Otero Lema
-# Exercicio 2
+# Exercicio 4
 
 N = 200
-t_steps = 100
+t_steps = 1000
 paint_step = 10
-delta_t, delta_x = .5, .5 # C debe ser exactamente 1
+delta_t, delta_x = .1, .5
 u = 1
 
 C = u * delta_t / delta_x
@@ -20,16 +20,19 @@ boundary_neumann = (lambda t : 0, lambda t : 0)
 boundaries = (boundary_dirichlet, boundary_neumann)
 boundary_types = ("dirichlet", "neumann")
 
-def diffusion_step(t, T_curr, boundary, boundary_type):
-    T_new = np.zeros_like(T_curr)
-
-    T_new[1:-1] = (1-C)*T_curr[1:-1] + C*T_curr[:-2]
+def implicit_diffusion_step(t, T, boundary, boundary_type):
 
     if boundary_type == "dirichlet":
-        T_new[0], T_new[-1] = boundary[0](t), boundary[-1](t)
+        left, right = boundary[0](t), boundary[-1](t)
     elif boundary_type == "neumann":
-        T_new[0], T_new[-1] = T_new[1] - delta_x * boundary[0](t), T_new[-2] - delta_x * boundary[1](t)
+        left, right = T[1] - delta_x * boundary[0](t), T[-2] - delta_x * boundary[-1](t)
+    indep = np.hstack((left, T[1:-1], right))
 
+    coeff = np.identity(N+1)
+    coeff[1:-1,0:N+1-2] -= C/2 * np.identity(N-1)
+    coeff[1:-1,2:] += C/2 * np.identity(N-1)
+
+    T_new = np.linalg.inv(coeff) @ indep
     return T_new
 
 fig, axs = plt.subplots(1, 2)
@@ -48,10 +51,10 @@ for _j, (boundary, boundary_type, ax, title) in enumerate(zip(boundaries, bounda
     ax.set_title(title)
 
     for t in range(t_steps):
-
-        T = diffusion_step(t, T, boundary, boundary_type)
+        
+        T = implicit_diffusion_step(t, T, boundary, boundary_type)
 
         if t % paint_step == 0:
             ax.plot(T, ls = "solid")
 
-fig.savefig("tema8/ex2.pdf", dpi = 300, bbox_inches = "tight")
+fig.savefig("tema8/ex4.pdf", dpi = 300, bbox_inches = "tight")
