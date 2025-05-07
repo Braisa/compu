@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Brais Otero Lema
-# Exercicio 8
+# Exercicio 10
 
 N = 20
 t_steps = 200
@@ -20,18 +20,24 @@ initial[1:3] = 20
 boundary_dirichlet = (lambda t : 0, lambda t : 0)
 boundary_neumann = (lambda t : 0, lambda t : 0)
 boundaries = (boundary_dirichlet, boundary_neumann)
-boundary_types = ("dirichlet", "neumann")   
+boundary_types = ("dirichlet", "neumann")
 
-def diffusion_step(t, T_curr, T_old, boundary, boundary_type):
-    T_new = np.zeros_like(T_curr)
-
-    T_new[1:-1] = ((1-2*s)*T_old[1:-1] - C*T_curr[1:-1] + 2*s*(T_curr[:-2] + T_curr[2:]))/(1+2*s)
+def implicit_diffusion_step(t, T, boundary, boundary_type):
 
     if boundary_type == "dirichlet":
-        T_new[0], T_new[-1] = boundary[0](t), boundary[-1](t)
+        left, right = boundary[0](t), boundary[-1](t)
     elif boundary_type == "neumann":
-        T_new[0], T_new[-1] = T_new[1] - delta_x * boundary[0](t), T_new[-2] - delta_x * boundary[1](t)
+        left, right = T[1] - delta_x * boundary[0](t), T[-2] - delta_x * boundary[-1](t)
+    
+    middle = (C/4 + s/2) * T[:-2] + (1-s) * T[1:-1] + (-C/4 + s/2) * T[2:]
+    indep = np.hstack((left, middle, right))
 
+    coeff = np.identity(N+1)
+    coeff[1:-1,1:-1] += s * np.identity(N-1)
+    coeff[1:-1,0:N+1-2] += -(C/4 + s/2) * np.identity(N-1)
+    coeff[1:-1,2:] += (C/4 - s/2) * np.identity(N-1)
+
+    T_new = np.linalg.inv(coeff) @ indep
     return T_new
 
 fig, axs = plt.subplots(1, 2)
@@ -39,7 +45,7 @@ titles = ("Dirichlet", "Fluxo nulo")
 
 for _j, (boundary, boundary_type, ax, title) in enumerate(zip(boundaries, boundary_types, np.ravel(axs), titles)):
 
-    T, T_old = initial, initial
+    T = initial
     ax.plot(T, ls = "solid")
 
     ax.set_xlim(left = 0, right = N)
@@ -51,10 +57,9 @@ for _j, (boundary, boundary_type, ax, title) in enumerate(zip(boundaries, bounda
 
     for t in range(t_steps):
         
-        T_old = T.copy()
-        T = diffusion_step(t, T, boundary, boundary_type)
+        T = implicit_diffusion_step(t, T, boundary, boundary_type)
 
         if t % paint_step == 0:
             ax.plot(T, ls = "solid")
 
-fig.savefig("tema8/ex8.pdf", dpi = 300, bbox_inches = "tight")
+fig.savefig("tema8/ex10.pdf", dpi = 300, bbox_inches = "tight")
