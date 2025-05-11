@@ -56,5 +56,6 @@ for _j, (boundary, boundary_type, ax, title) in enumerate(zip(boundaries, bounda
 
         if t % paint_step == 0:
             ax.plot(T, ls = "solid")
+            plt.pause(0.1)
 
-fig.savefig("tema8/ex5.pdf", dpi = 300, bbox_inches = "tight")
+#fig.savefig("tema8/ex5.pdf", dpi = 300, bbox_inches = "tight")

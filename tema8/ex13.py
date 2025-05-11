@@ -114,5 +114,6 @@ for t in range(t_steps):
 
     if t % paint_step == 0:
         ax.pcolor(T, cmap = sub_plasma)
+        plt.pause(0.1)
 
-fig.savefig("tema8/ex13.pdf", dpi = 300, bbox_inches = "tight")
+#fig.savefig("tema8/ex13.pdf", dpi = 300, bbox_inches = "tight")

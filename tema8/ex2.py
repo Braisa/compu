@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 # Brais Otero Lema
 # Exercicio 2
 
-N = 200
+N = 100
 t_steps = 100
 paint_step = 10
 delta_t, delta_x = .5, .5 # C debe ser exactamente 1
@@ -53,5 +53,6 @@ for _j, (boundary, boundary_type, ax, title) in enumerate(zip(boundaries, bounda
 
         if t % paint_step == 0:
             ax.plot(T, ls = "solid")
+            plt.pause(0.1)
 
-fig.savefig("tema8/ex2.pdf", dpi = 300, bbox_inches = "tight")
+#fig.savefig("tema8/ex2.pdf", dpi = 300, bbox_inches = "tight")

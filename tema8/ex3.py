@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 N = 20
 t_steps = 200
 paint_step = 10
-delta_t, delta_x = .05, .5
+delta_t, delta_x = .05, .5 # Evítase a diverxencia, pero non atopei parámetros diminuír máis o erro
 u = 1
 
 C = u * delta_t / delta_x
@@ -57,5 +57,6 @@ for _j, (boundary, boundary_type, ax, title) in enumerate(zip(boundaries, bounda
 
         if t % paint_step == 0:
             ax.plot(T, ls = "solid")
+            plt.pause(0.1)
 
-fig.savefig("tema8/ex3.pdf", dpi = 300, bbox_inches = "tight")
+#fig.savefig("tema8/ex3.pdf", dpi = 300, bbox_inches = "tight")

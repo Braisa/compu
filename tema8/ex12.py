@@ -17,11 +17,11 @@ alpha_x, alpha_y = 1, 1
 s_x, s_y = alpha_x * delta_t / delta_x**2, alpha_y * delta_t / delta_x**2
 C = u * delta_t / delta_x
 
-initial = np.zeros((N+1,N+1))
+initial = np.zeros((N,N))
 initial[9:11,9:11] = 5
 
 # Bottom, Right, Top, Left
-boundary_strips = (10*np.ones(N-1),np.zeros(N-1),np.zeros(N-1),10*np.ones(N-1))
+boundary_strips = (10*np.ones(N-2),np.zeros(N-2),np.zeros(N-2),10*np.ones(N-2))
 # Bottom left, Bottom right, Top right, Top left
 boundary_corners = (10,10,0,10)
 
@@ -55,6 +55,11 @@ ax.pcolor(T, cmap = sub_plasma)
 
 ax.set_xlim(left = 0, right = N)
 
+ax.set_xticks(.5 + np.arange(N))
+ax.set_xticklabels(1 + np.arange(N))
+ax.set_yticks(.5 + np.arange(N))
+ax.set_yticklabels(1 + np.arange(N))
+
 ax.set_xlabel(r"$x$")
 ax.set_ylabel(r"$y$")
 
@@ -64,5 +69,6 @@ for t in range(t_steps):
 
     if t % paint_step == 0:
         ax.pcolor(T, cmap = sub_plasma)
+        plt.pause(0.1)
 
-fig.savefig("tema8/ex12.pdf", dpi = 300, bbox_inches = "tight")
+#fig.savefig("tema8/ex12.pdf", dpi = 300, bbox_inches = "tight")

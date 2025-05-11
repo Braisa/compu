@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 N = 20
 t_steps = 200
 paint_step = 10
-delta_t, delta_x = .05, .5
+delta_t, delta_x = .05, .5 # Debe verificarse C <= 1
 u = 1
 alpha = 1
 
@@ -32,6 +32,9 @@ def diffusion_step(t, T_curr, T_old, boundary, boundary_type):
     elif boundary_type == "neumann":
         T_new[0], T_new[-1] = T_new[1] - delta_x * boundary[0](t), T_new[-2] - delta_x * boundary[1](t)
 
+    # Promedio para mesturar información
+    T_new[1:-1] = .5 * (T_new[1:-1] + T[1:-1]).copy()
+
     return T_new
 
 fig, axs = plt.subplots(1, 2)
@@ -52,9 +55,10 @@ for _j, (boundary, boundary_type, ax, title) in enumerate(zip(boundaries, bounda
     for t in range(t_steps):
         
         T_old = T.copy()
-        T = diffusion_step(t, T, boundary, boundary_type)
+        T = diffusion_step(t, T, T_old, boundary, boundary_type)
 
         if t % paint_step == 0:
             ax.plot(T, ls = "solid")
+            plt.pause(0.1)
 
-fig.savefig("tema8/ex8.pdf", dpi = 300, bbox_inches = "tight")
+#fig.savefig("tema8/ex8.pdf", dpi = 300, bbox_inches = "tight")
